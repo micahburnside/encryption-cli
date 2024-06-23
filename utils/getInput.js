@@ -9,7 +9,7 @@ function getInput(prompt) {
   return new Promise((resolve) => {
     rl.question(prompt, (answer) => {
       rl.close();
-      resolve(answer);
+      resolve(answer.trim());
     });
   });
 }

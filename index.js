@@ -2,14 +2,17 @@ const fs = require('fs');
 const getInput = require('./utils/getInput');
 const handleKeyGen = require('./handlers/handleKeyGen');
 const printPublicKey = require('./handlers/printPublicKey');
+const comparePublicKeys = require('./handlers/comparePublicKeys');
 
 // Main CLI function
 async function main() {
   try {
-    const operation = await getInput('Choose an operation (1: keygen, 2: encrypt, 3: decrypt, 4: keyexchange, 5: print public key): ');
+    const operation = await getInput('Choose an operation (1: keygen, 2: encrypt, 3: decrypt, 4: keyexchange, 5: print public key, 6: compare public keys): ');
     const storagePath = await getInput('Enter the path to the external storage (USB drive, SD card, etc.): ');
 
-    if (!fs.existsSync(storagePath)) {
+    try {
+      await fs.promises.access(storagePath);
+    } catch {
       console.error('Error: The specified storage path does not exist.');
       return;
     }
@@ -35,8 +38,12 @@ async function main() {
       case 'print public key':
         await printPublicKey(storagePath);
         break;
+      case '6':
+      case 'compare public keys':
+        await comparePublicKeys(storagePath);
+        break;
       default:
-        console.error('Invalid operation. Please choose from 1, 2, 3, 4, or 5.');
+        console.error('Invalid operation. Please choose from 1, 2, 3, 4, 5, or 6.');
     }
   } catch (error) {
     console.error('An error occurred:', error.message);
