@@ -1,0 +1,34 @@
+# Node.js
+node_modules/
+npm-debug.log*
+
+# Environment variables
+.env
+
+# IDEs and editors
+.idea/
+.vscode/
+*.sublime-workspace
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Sensitive data
+cryptography/handlers/*.pem
+cryptography/handlers/*.key
+cryptography/handlers/*.crt
+cryptography/handlers/*.json
+
+# Ignore key storage files
+*keystore*
+
+# Ignore any other secret keys
+*.pem
+*.key
+*.crt
+*.pfx
+*.cert
+*.der
+*.p12
+*.asc
