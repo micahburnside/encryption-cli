@@ -1,6 +1,7 @@
 const fs = require('fs');
 const getInput = require('./utils/getInput');
-const isYes = require('./utils/isYes');
+const handleKeyGen = require('./handlers/handleKeyGen');
+const printPublicKey = require('./handlers/printPublicKey');
 
 // Main CLI function
 async function main() {
@@ -20,15 +21,15 @@ async function main() {
         break;
       case '2':
       case 'encrypt':
-        await handleEncrypt(storagePath);
+        console.log('Encryption functionality is not yet implemented.');
         break;
       case '3':
       case 'decrypt':
-        await handleDecrypt(storagePath);
+        console.log('Decryption functionality is not yet implemented.');
         break;
       case '4':
       case 'keyexchange':
-        await handleKeyExchange(storagePath);
+        console.log('Key exchange functionality is not yet implemented.');
         break;
       case '5':
       case 'print public key':
