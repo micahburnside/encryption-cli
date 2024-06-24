@@ -1,11 +1,15 @@
-const { loadPublicKey } = require('../utils/fileUtils');
+const { loadFile } = require('../utils/fileUtils');  // Assuming loadPublicKey was meant to be loadFile
 const { pemToHex, hexToPem } = require('../utils/keyConverter');
 
 async function checkKeyFormat(storagePath) {
-  const publicKey = loadPublicKey(storagePath);
-  let isPemFormat = publicKey.includes('-----BEGIN PUBLIC KEY-----');
+  try {
+    const publicKey = (await loadFile(storagePath)).toString();  // Make sure to await the async call
+    const isPemFormat = publicKey.includes('-----BEGIN PUBLIC KEY-----');
 
-  return { isPemFormat, publicKey };
+    return { isPemFormat, publicKey };
+  } catch (error) {
+    throw new Error(`Error loading public key: ${error.message}`);
+  }
 }
 
 module.exports = checkKeyFormat;

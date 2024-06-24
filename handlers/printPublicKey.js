@@ -1,16 +1,23 @@
-const { loadFile } = require('../utils/fileUtils');
-const { pemToHex, hexToPem } = require('../utils/keyConverter');
-const getInput = require('../utils/getInput');  // Ensure this line is present
+const checkKeyFormat = require('../utils/checkKeyFormat');
+const getInput = require('../utils/getInput');
 const getValidFilePath = require('../utils/getValidFilePath');
+const { pemToHex, hexToPem } = require('../utils/keyConverter');
 
 async function printPublicKey() {
   try {
     const validPublicKeyPath = await getValidFilePath('Enter the path to the public key: ', 'publicKey.pem');
 
     console.log('Loading public key...');
-    const publicKey = (await loadFile(validPublicKeyPath)).toString();
-    const isPemFormat = publicKey.includes('-----BEGIN PUBLIC KEY-----');
-    const format = await getInput(`The current format is ${isPemFormat ? 'PEM' : 'Hex'}. Do you want to print it in pem or hex? `);
+    const { isPemFormat, publicKey } = await checkKeyFormat(validPublicKeyPath);
+
+    const validateFormat = (input) => {
+      const format = input.trim().toLowerCase();
+      if (format !== 'pem' && format !== 'hex') {
+        throw new Error('Invalid format. Please choose either pem or hex.');
+      }
+    };
+
+    const format = await getInput(`The current format is ${isPemFormat ? 'PEM' : 'Hex'}. Do you want to print it in pem or hex? `, validateFormat);
 
     switch (format.trim().toLowerCase()) {
       case 'pem':

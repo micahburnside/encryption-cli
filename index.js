@@ -6,7 +6,7 @@ const comparePublicKeys = require('./handlers/comparePublicKeys');
 // Main CLI function
 async function main() {
   try {
-    const operation = await getInput('Choose an operation (1: keygen, 2: encrypt, 3: decrypt, 4: keyexchange, 5: print public key, 6: compare public keys): ');
+    const operation = await getInput('Choose an operation 1: keygen, 2: encrypt, 3: decrypt, 4: keyexchange, 5: print public key, 6: compare public keys \n');
 
     switch (operation.toLowerCase()) {
       case '1':

@@ -1,16 +1,20 @@
+// keyConverter.js
 function pemToHex(pem) {
-  const base64 = pem
-    .replace('-----BEGIN PUBLIC KEY-----', '')
-    .replace('-----END PUBLIC KEY-----', '')
-    .replace(/\s+/g, '');
-  const buffer = Buffer.from(base64, 'base64');
-  return buffer.toString('hex');
+  // Implement the conversion from PEM to Hex
+  const lines = pem.split('\n');
+  const encoded = lines.slice(1, lines.length - 1).join('');
+  const hex = Buffer.from(encoded, 'base64').toString('hex');
+  return hex;
 }
 
 function hexToPem(hex) {
+  // Implement the conversion from Hex to PEM
   const base64 = Buffer.from(hex, 'hex').toString('base64');
-  const formattedBase64 = base64.match(/.{1,64}/g).join('\n');
-  return `-----BEGIN PUBLIC KEY-----\n${formattedBase64}\n-----END PUBLIC KEY-----`;
+  const lines = [];
+  for (let i = 0; i < base64.length; i += 64) {
+    lines.push(base64.substring(i, i + 64));
+  }
+  return `-----BEGIN PUBLIC KEY-----\n${lines.join('\n')}\n-----END PUBLIC KEY-----`;
 }
 
 module.exports = { pemToHex, hexToPem };
