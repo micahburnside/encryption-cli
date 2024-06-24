@@ -32,7 +32,7 @@ const { isYes, isNo } = require('./userResponse');
 
 async function loadFile(filePath) {
   if (await checkFileExistence(filePath, false)) { // false indicates not checking for overwrite
-    const fileContents = await fs.readFile(filePath, 'utf8');
+    const fileContents = await fs.readFile(filePath);
     return fileContents;
   } else {
     console.log('File loading operation aborted.');

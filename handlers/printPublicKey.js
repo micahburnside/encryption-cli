@@ -1,14 +1,14 @@
 const { loadFile } = require('../utils/fileUtils');
 const { pemToHex, hexToPem } = require('../utils/keyConverter');
-const getInput = require('../utils/getInput');
+const getInput = require('../utils/getInput');  // Ensure this line is present
 const getValidFilePath = require('../utils/getValidFilePath');
 
-async function printPublicKey(storagePath) {
+async function printPublicKey() {
   try {
-    const publicKeyPath = await getValidFilePath('Enter the path to the public key file or directory: ');
+    const validPublicKeyPath = await getValidFilePath('Enter the path to the public key: ', 'publicKey.pem');
 
     console.log('Loading public key...');
-    const publicKey = (await loadFile(publicKeyPath)).toString();
+    const publicKey = (await loadFile(validPublicKeyPath)).toString();
     const isPemFormat = publicKey.includes('-----BEGIN PUBLIC KEY-----');
     const format = await getInput(`The current format is ${isPemFormat ? 'PEM' : 'Hex'}. Do you want to print it in pem or hex? `);
 

@@ -2,48 +2,27 @@ const fs = require('fs').promises;
 const path = require('path');
 const getInput = require('./getInput');
 
-async function getValidFilePath(prompt) {
-  let filePath = await getInput(prompt);
-
-  // Check if provided path is a directory
-  let stats;
-  try {
-    stats = await fs.lstat(filePath);
-  } catch (err) {
-    console.error(`Path ${filePath} does not exist.`);
-  }
-
-  if (stats && stats.isDirectory()) {
-    filePath = path.join(filePath, 'publicKey.pem');
-  }
-
-  // Keep prompting until a valid file path is provided
+async function getValidFilePath(initialPrompt, defaultFileName) {
   while (true) {
-    try {
-      await fs.access(filePath);
-      break; // If file exists, break the loop
-    } catch (err) {
-      console.error(`File ${filePath} does not exist.`);
-      const retryResponse = await getInput('Do you want to provide a new path? (yes/no): ');
+    let filePath = await getInput(initialPrompt);
 
-      if (retryResponse.trim().toLowerCase() === 'yes') {
-        filePath = await getInput(prompt);
-        try {
-          stats = await fs.lstat(filePath);
-          if (stats.isDirectory()) {
-            filePath = path.join(filePath, 'publicKey.pem');
-          }
-        } catch (err) {
-          console.error(`Path ${filePath} does not exist.`);
-        }
-      } else {
-        console.log('Exiting the client.');
-        process.exit(0);
+    if (!filePath.trim()) {
+      console.error('Error: Path cannot be empty.');
+      continue;
+    }
+
+    try {
+      const stats = await fs.lstat(filePath);
+      if (stats.isDirectory()) {
+        filePath = path.join(filePath, defaultFileName);
       }
+      await fs.access(path.dirname(filePath));
+      return filePath;
+    } catch (error) {
+      console.error(`Invalid file path: ${error.message}`);
+      initialPrompt = 'Enter a valid path: ';
     }
   }
-
-  return filePath;
 }
 
 module.exports = getValidFilePath;
