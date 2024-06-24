@@ -5,7 +5,7 @@ const { pemToHex, hexToPem } = require('../utils/keyConverter');
 
 async function printPublicKey() {
   try {
-    const validPublicKeyPath = await getValidFilePath('Enter the path to the public key: ', 'publicKey.pem');
+    const validPublicKeyPath = await getValidFilePath('Enter the path to the public key: ', 'publicKey.pem', false);
 
     console.log('Loading public key...');
     const { isPemFormat, publicKey } = await checkKeyFormat(validPublicKeyPath);
