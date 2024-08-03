@@ -10,6 +10,7 @@ This Node.js command-line interface (CLI) tool provides key generation, public k
 	•	Access cyryptographic keys via USB
 	•	Choose key format PEM / HEX.
 	•	Print the public key.
+	•	Will not expose the public key.
 	•	Compare two keys to see if they match.
 	•	User-friendly command-line interface.
 
