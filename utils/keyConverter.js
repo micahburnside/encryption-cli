@@ -1,4 +1,3 @@
-// keyConverter.js
 function pemToHex(pem) {
   // Implement the conversion from PEM to Hex
   const lines = pem.split('\n');

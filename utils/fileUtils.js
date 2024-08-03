@@ -1,31 +1,3 @@
-// const fs = require('fs');
-// const path = require('path');
-// const crypto = require('crypto');
-//
-// function loadPublicKey(publicKeyPath) {
-//   const publicKeyPem = fs.readFileSync(publicKeyPath, 'utf8');
-//   return publicKeyPem;
-// }
-//
-// function loadPrivateKey(privateKeyPath) {
-//   const privateKeyPem = fs.readFileSync(privateKeyPath, 'utf8');
-//   return crypto.createPrivateKey(privateKeyPem);
-// }
-//
-// function checkFileExistence(filePath) {
-//   try {
-//     return fs.existsSync(filePath);
-//   } catch (err) {
-//     console.error(err);
-//     return false;
-//   }
-// }
-//
-// module.exports = {
-//   loadPublicKey,
-//   loadPrivateKey,
-//   checkFileExistence
-// };
 const fs = require('fs').promises;
 const getInput = require('./getInput');
 const { isYes, isNo } = require('./userResponse');
@@ -39,6 +11,7 @@ async function loadFile(filePath) {
     return null;
   }
 }
+
 
 async function checkFileExistence(filePath, checkOverwrite = true) {
   try {

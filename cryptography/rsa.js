@@ -24,4 +24,8 @@ function savePublicKey(publicKeyPath, publicKey) {
   fs.writeFileSync(publicKeyPath, publicKey);
 }
 
-module.exports = { generateRSAKeys, savePrivateKey, savePublicKey };
+function saveKey(publicKeyPath, publicKey, privateKeyPath, privateKey, isPrivate ) {
+  fs.writeFileSync(publicKeyPath, publicKey, privateKeyPath, privateKey, isPrivate);
+}
+
+module.exports = { generateRSAKeys, savePrivateKey, savePublicKey, saveKey };
